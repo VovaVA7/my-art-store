@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% block title %}Корзина — Art Store{% endblock %}
+
+{% block content %}
+<div style="display: flex; flex-direction: column; align-items: center; text-align: center; padding: 40px 20px;">
+    <h1 class="page-title">Корзина</h1>
+
+    {% if items %}
+        <table class="cart-table" style="margin: 20px auto; width: 80%; max-width: 800px; border-collapse: collapse;">
+            <thead>
+                <tr>
+                    <th>Картина</th>
+                    <th>Автор</th>
+                    <th>Цена</th>
+                    <th>Кол-во</th>
+                    <th>Сумма</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for row in items %}
+                <tr>
+                    <td class="cart-title">
+                        <img src="{{ row.painting.img }}" alt="" class="cart-thumb">
+                        {{ row.painting.name }}
+                    </td>
+                    <td>{{ row.painting.artist }}</td>
+                    <td>${{ row.painting.price }}</td>
+                    <td class="qty">
+                        <a class="qty-btn" href="{{ url_for('cart_decrease', painting_id=row.painting.id) }}">−</a>
+                        <span>{{ row.qty }}</span>
+                        <a class="qty-btn" href="{{ url_for('cart_increase', painting_id=row.painting.id) }}">+</a>
+                    </td>
+                    <td>${{ row.subtotal }}</td>
+                    <td><a class="link danger" href="{{ url_for('cart_remove', painting_id=row.painting.id) }}">Удалить</a></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <div class="cart-bottom" style="margin: 20px 0; font-size: 1.2em;">
+            <div class="total">Итого: <strong>${{ total }}</strong></div>
+            <div class="actions" style="margin-top: 10px;">
+                <a class="btn ghost" href="{{ url_for('cart_clear') }}">Очистить корзину</a>
+                <a class="btn" href="{{ url_for('checkout') }}">Оформить заказ</a>
+            </div>
+        </div>
+    {% else %}
+        <p>Корзина пуста.</p>
+        <p><a class="link" href="{{ url_for('index') }}">← Перейти к картинам</a></p>
+    {% endif %}
+</div>
+{% endblock %}

@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Art Store{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <style>
+        /* Минимальные стили для выпадающего меню */
+        .dropdown { position: relative; display: inline-block; }
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #fff;
+            min-width: 160px;
+            box-shadow: 0px 8px 16px rgba(0,0,0,0.2);
+            z-index: 1;
+        }
+        .dropdown:hover .dropdown-content { display: block; }
+        .dropdown-content a {
+            color: #000;
+            padding: 10px 16px;
+            text-decoration: none;
+            display: block;
+        }
+        .dropdown-content a:hover { background-color: #f1f1f1; }
+        .badge { background-color: red; color: #fff; padding: 2px 6px; border-radius: 50%; font-size: 0.8em; }
+
+        /* Футер как кнопка */
+        .site-footer-wrapper {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            margin-top: 40px;
+        }
+        .site-footer {
+            background-color: #facc15; /* ярко-жёлтый */
+            color: #111827; /* тёмный текст */
+            font-weight: 700;
+            padding: 12px 28px; /* размер футера как кнопки */
+            border-radius: 24px; /* полностью закруглённые углы */
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15); /* лёгкая тень */
+            cursor: default;
+        }
+    </style>
+</head>
+<body>
+<header class="site-header">
+    <div class="container header-inner">
+        <a class="brand" href="{{ url_for('index') }}">Art Store</a>
+        <nav class="main-nav">
+            <a href="{{ url_for('index') }}">Главная</a>
+
+            <div class="dropdown">
+                <a href="#">Магазин</a>
+                <div class="dropdown-content">
+                    <a href="{{ url_for('shop_paintings') }}">Картины</a>
+                    <a href="{{ url_for('shop_sculptures') }}">Скульптуры</a>
+                    <a href="{{ url_for('shop_rareties') }}">Раритет</a>
+                    <a href="{{ url_for('shop_coins') }}">Монеты</a>
+                </div>
+            </div>
+
+            <a href="{{ url_for('cart_view') }}">Корзина
+                {% if cart_count > 0 %}
+                    <span class="badge">{{ cart_count }}</span>
+                {% endif %}
+            </a>
+            <a href="{{ url_for('contact') }}">Контакты</a>
+        </nav>
+    </div>
+</header>
+
+<main class="container">
+    {% block content %}{% endblock %}
+</main>
+
+<div class="site-footer-wrapper">
+    <footer class="site-footer">
+        Corporation VA
+    </footer>
+</div>
+
+</body>
+</html>

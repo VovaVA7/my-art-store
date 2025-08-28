@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ painting.name }} — Art Store</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+<header>
+    <h1>{{ painting.name }}</h1>
+    <nav>
+        <a href="{{ url_for('index') }}">Главная</a>
+        <a href="{{ url_for('cart_view') }}">Корзина ({{ cart_count }})</a>
+    </nav>
+</header>
+
+<main class="detail">
+    <img src="{{ painting.img }}" alt="{{ painting.name }}" class="painting-img">
+    <h2>{{ painting.name }}</h2>
+    <p>Автор: {{ painting.artist }}</p>
+    <p>Цена: {{ painting.price }} ₽</p>
+
+    <!-- Форма добавления в корзину -->
+    <form action="{{ url_for('cart_add', painting_id=painting.id) }}" method="post">
+        <button class="btn">Добавить в корзину</button>
+    </form>
+</main>
+
+<footer>
+    <p>© 2025 My Art Store</p>
+</footer>
+</body>
+</html>

@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block title %}Контакты — Art Store{% endblock %}
+
+{% block content %}
+<div class="contacts">
+  <h1 class="page-title">Контакты</h1>
+
+  <p>Вы можете связаться с нами по следующим каналам:</p>
+  <ul>
+    <li>Email: <a href="mailto:info@artstore.com">info@artstore.com</a></li>
+    <li>Телефон: </li>
+    <li>Адрес: </li>
+  </ul>
+
+  <h2>Форма обратной связи</h2>
+  <form action="#" method="post">
+    <label>Имя:</label><br>
+    <input type="text" name="name" required><br><br>
+    
+    <label>Email:</label><br>
+    <input type="email" name="email" required><br><br>
+    
+    <label>Сообщение:</label><br>
+    <textarea name="message" rows="5" required></textarea><br><br>
+    
+    <button class="btn" type="submit">Отправить</button>
+  </form>
+</div>
+{% endblock %}

@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block title %}Магазин — Art Store{% endblock %}
+
+{% block content %}
+<h1>Магазин</h1>
+<div class="shop-categories">
+    <a class="category" href="{{ url_for('shop_paintings') }}">Картины</a>
+    <a class="category" href="{{ url_for('shop_sculptures') }}">Скульптуры</a>
+    <a class="category" href="{{ url_for('shop_rareties') }}">Раритет</a>
+    <a class="category" href="{{ url_for('shop_coins') }}">Монеты</a>
+</div>
+{% endblock %}
