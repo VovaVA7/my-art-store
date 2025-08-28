@@ -1,0 +1,207 @@
+/* База */
+* { box-sizing: border-box; }
+:root {
+  --bg: #f7f7f8;
+  --card: #ffffffcc; /* немного прозрачности для фона */
+  --text: #1f2328;
+  --muted: #6b7280;
+  --brand: #111827;
+  --accent: #2563eb;
+  --accent-2: #111827;
+  --danger: #ef4444;
+  --shadow: 0 6px 18px rgba(0,0,0,.08);
+  --radius: 14px;
+  --promo-bg: #facc15; /* яркий жёлтый для спецпредложения */
+  --curtain: #4b001f; /* тёмная вишня для штор */
+}
+
+/* Фон главной страницы */
+body.home {
+  background: url('../img/monalisa.jpg') center/cover no-repeat fixed;
+  color: var(--text);
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Inter, Arial, "Noto Sans";
+  height: 100%;
+  position: relative;
+}
+
+/* Волнистые боковые шторы */
+body::before,
+body::after {
+  content: "";
+  position: fixed;
+  top: 0;
+  width: 120px; /* ширина штор */
+  height: 100%;
+  z-index: 5;
+  pointer-events: none;
+  background: linear-gradient(to bottom, rgba(75,0,31,0.95), rgba(75,0,31,0.6));
+  clip-path: polygon(
+    0 0, 100% 0, 80% 10%, 100% 20%, 80% 30%, 100% 40%,
+    80% 50%, 100% 60%, 80% 70%, 100% 80%, 80% 90%, 100% 100%, 0 100%
+  );
+}
+
+body::before { left: 0; transform: scaleX(-1); } /* левая штора зеркально */
+body::after { right: 0; } /* правая штора */
+
+/* Контейнер */
+.container {
+  width: min(1200px, 92%);
+  margin: 0 auto;
+}
+
+/* Шапка */
+.site-header {
+  background: var(--brand);
+  color: #fff;
+  position: sticky; 
+  top: 0; 
+  z-index: 10;
+  box-shadow: var(--shadow);
+}
+.header-inner {
+  display: flex; 
+  align-items: center; 
+  justify-content: space-between; /* логотип слева, меню по центру */
+  padding: 14px 0;
+  position: relative;
+}
+.brand {
+  font-weight: 800; 
+  letter-spacing: .3px;
+  color: #fff; 
+  text-decoration: none; 
+  font-size: 22px;
+}
+/* Меню по центру */
+.main-nav {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 24px;
+}
+.main-nav a {
+  color: #e5e7eb; 
+  text-decoration: none; 
+  font-size: 18px;
+  font-weight: 600;
+}
+.main-nav a:hover { color: #fff; }
+
+/* Блок специального предложения */
+.promo-block {
+  background: var(--promo-bg);
+  color: var(--brand);
+  border-radius: 24px;       /* скруглённые углы */
+  padding: 60px 24px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 300px;         /* оптимальная высота */
+  width: 100%;               /* на всю ширину */
+  margin: 40px 0;            /* отступ сверху и снизу */
+  box-shadow: var(--shadow); /* лёгкая тень */
+}
+.promo-block h1 {
+  font-size: 48px;
+  margin-bottom: 16px;
+  font-weight: 900;
+}
+.promo-block p {
+  font-size: 20px;
+  margin-bottom: 28px;
+}
+.btn-promo {
+  background: var(--brand);
+  color: #fff;
+  padding: 14px 32px;
+  font-weight: 700;
+  border-radius: 12px;
+  text-decoration: none;
+  font-size: 18px;
+}
+.btn-promo:hover { filter: brightness(0.9); }
+
+/* Сетка карточек магазина */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 22px;
+  margin: 60px 0 80px;
+}
+.card {
+  background: var(--card);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+  display: flex; flex-direction: column;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+.card:hover { transform: translateY(-6px); box-shadow: 0 12px 28px rgba(0,0,0,0.15); }
+.thumb img { display: block; width: 100%; height: 220px; object-fit: cover; border-radius: var(--radius); }
+.card-body { padding: 16px; display: grid; gap: 6px; }
+.title { text-decoration: none; color: var(--text); font-weight: 700; font-size: 16px; }
+.title:hover { color: var(--accent); }
+.meta { color: var(--muted); font-size: 14px; }
+.price { font-weight: 800; margin-top: 6px; }
+
+/* Кнопки */
+.btn {
+  display: inline-block; padding: 12px 20px; border-radius: 12px;
+  background: var(--accent); color: #fff; border: none; cursor: pointer;
+  text-decoration: none; text-align: center; font-weight: 700; margin-top: 10px;
+}
+.btn:hover { filter: brightness(0.95); }
+
+/* Футер */
+.site-footer {
+  margin-top: 40px;
+  padding: 22px 0;
+  color: #6b7280;
+  text-align: center;
+}
+
+/* Заголовки страниц внутри контейнера */
+.page-title {
+  font-size: 32px;
+  font-weight: 800;
+  margin-bottom: 32px;
+  text-align: center;
+  color: var(--brand);
+}
+
+/* Контакты */
+.contacts {
+  max-width: 600px;
+  margin: 0 auto;
+  text-align: center;
+}
+/* убираем точки у списка */
+.contacts ul {
+  list-style: none;
+  padding: 0;
+  margin-bottom: 20px;
+}
+/* форма */
+.contacts form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  align-items: center;
+}
+.contacts input,
+.contacts textarea {
+  width: 100%;
+  max-width: 400px;
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 16px;
+}
+.contacts button {
+  max-width: 200px;
+}
