@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Корзина — Art Store</title>
+  <link rel="stylesheet" href="static/css/style.css">
+  <script defer src="static/js/cart.js"></script>
+</head>
+<body>
+  <!-- Шапка -->
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="index.html" class="brand">🎨 Art Store</a>
+      <nav class="main-nav">
+        <a href="index.html">Главная</a>
+        <a href="shop.html">Магазин</a>
+        <a href="cart.html">Корзина 🛒 (<span id="cart-count">0</span>)</a>
+        <a href="contacts.html">Контакты</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Контент -->
+  <div class="container" style="padding: 40px 20px; text-align: center;">
+    <h1 class="page-title">Корзина</h1>
+
+    <div id="cart-container"></div>
+
+    <div class="cart-bottom" id="cart-bottom" style="display: none; margin-top: 20px; font-size: 1.2em;">
+      <div class="total">Итого: <strong id="cart-total">$0</strong></div>
+      <div class="actions" style="margin-top: 10px;">
+        <button class="btn ghost" onclick="clearCart()">Очистить корзину</button>
+        <a class="btn" href="checkout.html">Оформить заказ</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Футер -->
+  <footer class="site-footer">
+    <p>© 2025 Art Store. Все права защищены.</p>
+  </footer>
+</body>
+</html>

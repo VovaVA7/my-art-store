@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Art Store{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body class="{% block body_class %}{% endblock %}">
+
+<header class="site-header">
+    <div class="container header-inner">
+        <a class="brand" href="{{ url_for('index') }}">Art Store</a>
+        <nav class="main-nav">
+            <a href="{{ url_for('index') }}">Главная</a>
+
+            <div class="dropdown">
+                <a href="#">Магазин</a>
+                <div class="dropdown-content">
+                    <a href="{{ url_for('paintings') }}">Картины</a>
+                    <a href="{{ url_for('sculptures') }}">Скульптуры</a>
+                    <a href="{{ url_for('rareties') }}">Раритет</a>
+                    <a href="{{ url_for('coins') }}">Монеты</a>
+                </div>
+            </div>
+
+            <a href="{{ url_for('cart') }}">Корзина <span class="badge" id="cart-count">0</span></a>
+            <a href="{{ url_for('contact') }}">Контакты</a>
+        </nav>
+    </div>
+</header>
+
+<main class="container" id="main-content">
+    {% block content %}
+    <!-- Контент каждой страницы вставляется сюда -->
+    {% endblock %}
+</main>
+
+<div class="site-footer-wrapper">
+    <footer class="site-footer">
+        Corporation VA
+    </footer>
+</div>
+
+<script>
+function updateCartCount() {
+    const cart = JSON.parse(localStorage.getItem('cart') || '{}');
+    const total = Object.values(cart).reduce((a,b)=>a+b,0);
+    document.getElementById('cart-count').textContent = total;
+}
+updateCartCount();
+</script>
+
+</body>
+</html>
