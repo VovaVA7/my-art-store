@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Art Store — Монеты</title>
+<link rel="stylesheet" href="static/css/style.css">
+</head>
+<body>
+
+<header class="site-header">
+    <a class="brand" href="index.html">Art Store</a>
+    <nav class="main-nav">
+        <a href="index.html">Главная</a>
+        <div class="dropdown">
+            <a href="#">Магазин</a>
+            <div class="dropdown-content">
+                <a href="paintings.html">Картины</a>
+                <a href="sculptures.html">Скульптуры</a>
+                <a href="rarities.html">Раритет</a>
+                <a href="coins.html">Монеты</a>
+            </div>
+        </div>
+        <a href="cart.html">Корзина <span class="badge" id="cart-count">0</span></a>
+        <a href="contact.html">Контакты</a>
+    </nav>
+</header>
+
+<main class="container">
+    <h2 class="page-title">Монеты</h2>
+    <div class="grid">
+        <div class="card" data-id="301" data-price="2000">
+            <img src="static/images/coin1.jpg" alt="Монета 1">
+            <h3>Монета 1</h3>
+            <p>Описание</p>
+            <p>$2 000</p>
+            <button onclick="addToCart(301, 2000)">Добавить в корзину</button>
+        </div>
+    </div>
+</main>
+
+<div class="site-footer-wrapper">
+    <footer class="site-footer">Corporation VA</footer>
+</div>
+
+<script>
+function getCart() { return JSON.parse(localStorage.getItem('cart') || '{}'); }
+function setCart(cart) { localStorage.setItem('cart', JSON.stringify(cart)); updateCartCount(); }
+function addToCart(id, price) { let cart = getCart(); cart[id] = (cart[id]||0)+1; setCart(cart); alert("Товар добавлен в корзину!"); }
+function updateCartCount() { let cart = getCart(); let total = Object.values(cart).reduce((a,b)=>a+b,0); document.getElementById('cart-count').textContent = total; }
+updateCartCount();
+</script>
+
+</body>
+</html>

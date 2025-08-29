@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Art Store — Главная</title>
+<link rel="stylesheet" href="static/css/style.css">
+</head>
+<body>
+
+<header class="site-header">
+    <a class="brand" href="index.html">Art Store</a>
+    <nav class="main-nav">
+        <a href="index.html">Главная</a>
+        <div class="dropdown">
+            <a href="#">Магазин</a>
+            <div class="dropdown-content">
+                <a href="paintings.html">Картины</a>
+                <a href="sculptures.html">Скульптуры</a>
+                <a href="rarities.html">Раритет</a>
+                <a href="coins.html">Монеты</a>
+            </div>
+        </div>
+        <a href="cart.html">Корзина <span class="badge" id="cart-count">0</span></a>
+        <a href="contact.html">Контакты</a>
+    </nav>
+</header>
+
+<main class="container">
+    <div class="special-offer">🔥 Специальное предложение: скидка 20% на все картины! 🔥</div>
+
+    <h2 class="page-title">Разделы магазина</h2>
+    <div class="sections">
+        <a class="section-card" href="sculptures.html">Скульптуры</a>
+        <a class="section-card" href="rarities.html">Раритет</a>
+        <a class="section-card" href="coins.html">Монеты</a>
+    </div>
+</main>
+
+<div class="site-footer-wrapper">
+    <footer class="site-footer">Corporation VA</footer>
+</div>
+
+<script>
+function updateCartCount() {
+    const cart = JSON.parse(localStorage.getItem('cart') || '{}');
+    const total = Object.values(cart).reduce((a,b)=>a+b,0);
+    document.getElementById('cart-count').textContent = total;
+}
+updateCartCount();
+</script>
+
+</body>
+</html>

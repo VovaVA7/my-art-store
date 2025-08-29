@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Art Store — Корзина</title>
+<link rel="stylesheet" href="static/css/style.css">
+</head>
+<body>
+
+<header class="site-header">
+    <a class="brand" href="index.html">Art Store</a>
+    <nav class="main-nav">
+        <a href="index.html">Главная</a>
+        <div class="dropdown">
+            <a href="#">Магазин</a>
+            <div class="dropdown-content">
+                <a href="paintings.html">Картины</a>
+                <a href="sculptures.html">Скульптуры</a>
+                <a href="rarities.html">Раритет</a>
+                <a href="coins.html">Монеты</a>
+            </div>
+        </div>
+        <a href="cart.html">Корзина <span class="badge" id="cart-count">0</span></a>
+        <a href="contact.html">Контакты</a>
+    </nav>
+</header>
+
+<main class="container">
+    <h2 class="page-title">Корзина</h2>
+    <div id="cart-items"></div>
+    <p id="total-price"></p>
+</main>
+
+<div class="site-footer-wrapper">
+    <footer class="site-footer">Corporation VA</footer>
+</div>
+
+<script>
+function getCart() { return JSON.parse(localStorage.getItem('cart') || '{}'); }
+function setCart(cart) { localStorage.setItem('cart', JSON.stringify(cart)); updateCart(); }
+
+function updateCart() {
+    const cart = getCart();
+    const cartItemsDiv = document.getElementById('cart-items');
+    cartItemsDiv.innerHTML = '';
+    let total = 0;
+    for (let id in cart) {
+        let count = cart[id];
+        total += count; // для примера считаем единиц
+        let div = document.createElement('div');
+        div.textContent = `Товар ${id} — Количество: ${count}`;
+        cartItemsDiv.appendChild(div);
+    }
+    document.getElementById('total-price').textContent = `Всего товаров: ${total}`;
+    document.getElementById('cart-count').textContent = total;
+}
+
+updateCart();
+</script>
+
+</body>
+</html>
