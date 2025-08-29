@@ -1,232 +1,138 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Art Store — Главная</title>
-  <link rel="stylesheet" href="static/css/style.css">
+    <meta charset="UTF-8">
+    <title>Art Store — Главная</title>
+    <link rel="stylesheet" href="static/css/style.css">
+    <style>
+        body { margin: 0; font-family: sans-serif; }
+        .site-header {
+            background-color: #111; 
+            color: #fff; 
+            padding: 12px 20px; 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center;
+        }
+        .brand { color: #fff; text-decoration: none; font-size: 1.5em; font-weight: bold; }
+        .main-nav a { color: #fff; margin: 0 10px; text-decoration: none; }
+        .main-nav .dropdown { position: relative; display: inline-block; }
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #fff;
+            min-width: 160px;
+            box-shadow: 0px 8px 16px rgba(0,0,0,0.2);
+            z-index: 1;
+        }
+        .dropdown:hover .dropdown-content { display: block; }
+        .dropdown-content a { color: #000; padding: 10px 16px; text-decoration: none; display: block; }
+        .dropdown-content a:hover { background-color: #f1f1f1; }
+        .badge { background-color: red; color: #fff; padding: 2px 6px; border-radius: 50%; font-size: 0.8em; }
+
+        .container { max-width: 1200px; margin: 20px auto; padding: 0 20px; }
+
+        .grid { display: flex; flex-wrap: wrap; gap: 20px; }
+        .card { background: #fff; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.1); width: calc(25% - 20px); }
+        .card img { width: 100%; display: block; }
+        .card-body { padding: 10px; }
+        .card-body .title { font-weight: bold; display: block; margin-bottom: 5px; text-decoration: none; color: #111; }
+        .card-body .meta { font-size: 0.9em; color: #555; margin-bottom: 5px; }
+        .card-body .price { font-weight: bold; margin-bottom: 5px; }
+        .card-body .btn { background-color: #111; color: #fff; border: none; padding: 6px 12px; cursor: pointer; border-radius: 4px; }
+        .card-body .btn:hover { background-color: #333; }
+
+        .site-footer-wrapper { width: 100%; display: flex; justify-content: center; margin-top: 40px; }
+        .site-footer {
+            background-color: #facc15;
+            color: #111827;
+            font-weight: 700;
+            padding: 12px 28px;
+            border-radius: 24px;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            cursor: default;
+        }
+
+        .page-title { margin: 40px 0 20px; font-size: 1.8em; }
+    </style>
 </head>
 <body>
 
-<!-- Блок специального предложения на весь экран -->
-<div class="promo-block">
-  <h1>Специальное предложение</h1>
-  <p>Уникальная акция только сегодня! Не упустите шанс!</p>
-  <a href="#" class="btn-promo">Перейти в магазин</a>
+<header class="site-header">
+    <a class="brand" href="index.html">Art Store</a>
+    <nav class="main-nav">
+        <a href="index.html">Главная</a>
+        <div class="dropdown">
+            <a href="#">Магазин</a>
+            <div class="dropdown-content">
+                <a href="shop/paintings.html">Картины</a>
+                <a href="shop/sculptures.html">Скульптуры</a>
+                <a href="shop/rareties.html">Раритет</a>
+                <a href="shop/coins.html">Монеты</a>
+            </div>
+        </div>
+        <a href="cart.html">Корзина <span class="badge" id="cart-count">0</span></a>
+        <a href="contact.html">Контакты</a>
+    </nav>
+</header>
+
+<main class="container">
+
+    <h2 class="page-title">Картины</h2>
+    <div class="grid">
+        <div class="card">
+            <img src="static/img/monalisa.jpg" alt="Мона Лиза">
+            <div class="card-body">
+                <span class="title">Мона Лиза</span>
+                <span class="meta">Леонардо да Винчи</span>
+                <span class="price">$1 000 000</span>
+                <button class="btn">Добавить в корзину</button>
+            </div>
+        </div>
+        <div class="card">
+            <img src="static/img/mountain.jpg" alt="Горы">
+            <div class="card-body">
+                <span class="title">Горы</span>
+                <span class="meta">Неизвестный</span>
+                <span class="price">$1 000</span>
+                <button class="btn">Добавить в корзину</button>
+            </div>
+        </div>
+        <div class="card">
+            <img src="static/img/river.jpg" alt="Река">
+            <div class="card-body">
+                <span class="title">Река</span>
+                <span class="meta">Неизвестный</span>
+                <span class="price">$1 000</span>
+                <button class="btn">Добавить в корзину</button>
+            </div>
+        </div>
+        <div class="card">
+            <img src="static/img/sunset.jpg" alt="Закат">
+            <div class="card-body">
+                <span class="title">Закат</span>
+                <span class="meta">Неизвестный</span>
+                <span class="price">$1 000</span>
+                <button class="btn">Добавить в корзину</button>
+            </div>
+        </div>
+    </div>
+
+</main>
+
+<div class="site-footer-wrapper">
+    <footer class="site-footer">Corporation VA</footer>
 </div>
 
-<!-- Блок магазина -->
-<div class="container">
-
-  <!-- Картины -->
-  <h2 class="page-title">Картины</h2>
-  <div class="grid">
-    <div class="card">
-      <a class="thumb" href="#">
-        <img src="static/img/monalisa.jpg" alt="Мона Лиза">
-      </a>
-      <div class="card-body">
-        <a class="title" href="#">Мона Лиза</a>
-        <div class="meta">Леонардо да Винчи</div>
-        <div class="price">$1 000 000</div>
-        <button class="btn">Добавить в корзину</button>
-      </div>
-    </div>
-
-    <div class="card">
-      <a class="thumb" href="#">
-        <img src="static/img/mountain.jpg" alt="Горы">
-      </a>
-      <div class="card-body">
-        <a class="title" href="#">Горы</a>
-        <div class="meta">Неизвестный</div>
-        <div class="price">$1 000</div>
-        <button class="btn">Добавить в корзину</button>
-      </div>
-    </div>
-
-    <div class="card">
-      <a class="thumb" href="#">
-        <img src="static/img/river.jpg" alt="Река">
-      </a>
-      <div class="card-body">
-        <a class="title" href="#">Река</a>
-        <div class="meta">Неизвестный</div>
-        <div class="price">$1 000</div>
-        <button class="btn">Добавить в корзину</button>
-      </div>
-    </div>
-
-    <div class="card">
-      <a class="thumb" href="#">
-        <img src="static/img/sunset.jpg" alt="Закат">
-      </a>
-      <div class="card-body">
-        <a class="title" href="#">Закат</a>
-        <div class="meta">Неизвестный</div>
-        <div class="price">$1 000</div>
-        <button class="btn">Добавить в корзину</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- Скульптуры -->
-  <h2 class="page-title">Скульптуры</h2>
-  <div class="grid">
-    <div class="card">
-      <a class="thumb" href="#">
-        <img src="static/img/placeholder.jpg" alt="Мраморная грация">
-      </a>
-      <div class="card-body">
-        <a class="title" href="#">Мраморная грация</a>
-        <div class="meta">Неизвестный</div>
-        <div class="price">$1 000</div>
-        <button class="btn">Добавить в корзину</button>
-      </div>
-    </div>
-
-    <div class="card">
-      <a class="thumb" href="#">
-        <img src="static/img/placeholder.jpg" alt="Танец камня">
-      </a>
-      <div class="card-body">
-        <a class="title" href="#">Танец камня</a>
-        <div class="meta">Неизвестный</div>
-        <div class="price">$1 000</div>
-        <button class="btn">Добавить в корзину</button>
-      </div>
-    </div>
-
-    <div class="card">
-      <a class="thumb" href="#">
-        <img src="static/img/placeholder.jpg" alt="Бронзовый век">
-      </a>
-      <div class="card-body">
-        <a class="title" href="#">Бронзовый век</a>
-        <div class="meta">Неизвестный</div>
-        <div class="price">$1 000</div>
-        <button class="btn">Добавить в корзину</button>
-      </div>
-    </div>
-
-    <div class="card">
-      <a class="thumb" href="#">
-        <img src="static/img/placeholder.jpg" alt="Вечная гармония">
-      </a>
-      <div class="card-body">
-        <a class="title" href="#">Вечная гармония</a>
-        <div class="meta">Неизвестный</div>
-        <div class="price">$1 000</div>
-        <button class="btn">Добавить в корзину</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- Раритеты -->
-  <h2 class="page-title">Раритеты</h2>
-  <div class="grid">
-    <div class="card">
-      <a class="thumb" href="#">
-        <img src="static/img/placeholder.jpg" alt="Старинная книга">
-      </a>
-      <div class="card-body">
-        <a class="title" href="#">Старинная книга</a>
-        <div class="meta">—</div>
-        <div class="price">$1 000</div>
-        <button class="btn">Добавить в корзину</button>
-      </div>
-    </div>
-
-    <div class="card">
-      <a class="thumb" href="#">
-        <img src="static/img/placeholder.jpg" alt="Фолиант мудрости">
-      </a>
-      <div class="card-body">
-        <a class="title" href="#">Фолиант мудрости</a>
-        <div class="meta">—</div>
-        <div class="price">$1 000</div>
-        <button class="btn">Добавить в корзину</button>
-      </div>
-    </div>
-
-    <div class="card">
-      <a class="thumb" href="#">
-        <img src="static/img/placeholder.jpg" alt="Амулет времени">
-      </a>
-      <div class="card-body">
-        <a class="title" href="#">Амулет времени</a>
-        <div class="meta">—</div>
-        <div class="price">$1 000</div>
-        <button class="btn">Добавить в корзину</button>
-      </div>
-    </div>
-
-    <div class="card">
-      <a class="thumb" href="#">
-        <img src="static/img/placeholder.jpg" alt="Золотая печать">
-      </a>
-      <div class="card-body">
-        <a class="title" href="#">Золотая печать</a>
-        <div class="meta">—</div>
-        <div class="price">$1 000</div>
-        <button class="btn">Добавить в корзину</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- Монеты -->
-  <h2 class="page-title">Монеты</h2>
-  <div class="grid">
-    <div class="card">
-      <a class="thumb" href="#">
-        <img src="static/img/placeholder.jpg" alt="Античный денарий">
-      </a>
-      <div class="card-body">
-        <a class="title" href="#">Античный денарий</a>
-        <div class="meta">—</div>
-        <div class="price">$1 000</div>
-        <button class="btn">Добавить в корзину</button>
-      </div>
-    </div>
-
-    <div class="card">
-      <a class="thumb" href="#">
-        <img src="static/img/placeholder.jpg" alt="Золотой дукат">
-      </a>
-      <div class="card-body">
-        <a class="title" href="#">Золотой дукат</a>
-        <div class="meta">—</div>
-        <div class="price">$1 000</div>
-        <button class="btn">Добавить в корзину</button>
-      </div>
-    </div>
-
-    <div class="card">
-      <a class="thumb" href="#">
-        <img src="static/img/placeholder.jpg" alt="Императорский талер">
-      </a>
-      <div class="card-body">
-        <a class="title" href="#">Императорский талер</a>
-        <div class="meta">—</div>
-        <div class="price">$1 000</div>
-        <button class="btn">Добавить в корзину</button>
-      </div>
-    </div>
-
-    <div class="card">
-      <a class="thumb" href="#">
-        <img src="static/img/placeholder.jpg" alt="Редкий соверен">
-      </a>
-      <div class="card-body">
-        <a class="title" href="#">Редкий соверен</a>
-        <div class="meta">—</div>
-        <div class="price">$1 000</div>
-        <button class="btn">Добавить в корзину</button>
-      </div>
-    </div>
-  </div>
-
-</div>
+<script>
+function updateCartCount() {
+    const cart = JSON.parse(localStorage.getItem('cart') || '{}');
+    const total = Object.values(cart).reduce((a,b)=>a+b,0);
+    document.getElementById('cart-count').textContent = total;
+}
+updateCartCount();
+</script>
 
 </body>
 </html>

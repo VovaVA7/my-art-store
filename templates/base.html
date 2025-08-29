@@ -2,83 +2,46 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <title>Art Store</title>
-    <link rel="stylesheet" href="static/css/style.css">
-    <style>
-        body { margin: 0; font-family: sans-serif; }
-        .site-header {
-            background-color: #111; 
-            color: #fff; 
-            padding: 12px 20px; 
-            display: flex; 
-            justify-content: space-between; 
-            align-items: center;
-        }
-        .brand { color: #fff; text-decoration: none; font-size: 1.5em; font-weight: bold; }
-        .main-nav a { color: #fff; margin: 0 10px; text-decoration: none; }
-        .main-nav .dropdown { position: relative; display: inline-block; }
-        .dropdown-content {
-            display: none;
-            position: absolute;
-            background-color: #fff;
-            min-width: 160px;
-            box-shadow: 0px 8px 16px rgba(0,0,0,0.2);
-            z-index: 1;
-        }
-        .dropdown:hover .dropdown-content { display: block; }
-        .dropdown-content a { color: #000; padding: 10px 16px; text-decoration: none; display: block; }
-        .dropdown-content a:hover { background-color: #f1f1f1; }
-        .badge { background-color: red; color: #fff; padding: 2px 6px; border-radius: 50%; font-size: 0.8em; }
-
-        .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
-
-        .site-footer-wrapper {
-            width: 100%;
-            display: flex;
-            justify-content: center;
-            margin-top: 40px;
-        }
-        .site-footer {
-            background-color: #facc15;
-            color: #111827;
-            font-weight: 700;
-            padding: 12px 28px;
-            border-radius: 24px;
-            text-align: center;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-            cursor: default;
-        }
-    </style>
+    <title>{% block title %}Art Store{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
-<body>
+<body class="{% block body_class %}{% endblock %}">
+
 <header class="site-header">
-    <a class="brand" href="index.html">Art Store</a>
-    <nav class="main-nav">
-        <a href="index.html">Главная</a>
-        <div class="dropdown">
-            <a href="#">Магазин</a>
-            <div class="dropdown-content">
-                <a href="shop/paintings.html">Картины</a>
-                <a href="shop/sculptures.html">Скульптуры</a>
-                <a href="shop/rareties.html">Раритет</a>
-                <a href="shop/coins.html">Монеты</a>
+    <div class="container header-inner">
+        <a class="brand" href="{{ url_for('index') }}">Art Store</a>
+        <nav class="main-nav">
+            <a href="{{ url_for('index') }}">Главная</a>
+
+            <div class="dropdown">
+                <a href="#">Магазин</a>
+                <div class="dropdown-content">
+                    <a href="{{ url_for('paintings') }}">Картины</a>
+                    <a href="{{ url_for('sculptures') }}">Скульптуры</a>
+                    <a href="{{ url_for('rareties') }}">Раритет</a>
+                    <a href="{{ url_for('coins') }}">Монеты</a>
+                </div>
             </div>
-        </div>
-        <a href="cart.html">Корзина <span class="badge" id="cart-count">0</span></a>
-        <a href="contact.html">Контакты</a>
-    </nav>
+
+            <a href="{{ url_for('cart') }}">Корзина <span class="badge" id="cart-count">0</span></a>
+            <a href="{{ url_for('contact') }}">Контакты</a>
+        </nav>
+    </div>
 </header>
 
 <main class="container" id="main-content">
+    {% block content %}
     <!-- Контент каждой страницы вставляется сюда -->
+    {% endblock %}
 </main>
 
 <div class="site-footer-wrapper">
-    <footer class="site-footer">Corporation VA</footer>
+    <footer class="site-footer">
+        Corporation VA
+    </footer>
 </div>
 
 <script>
-// Обновление счетчика корзины
 function updateCartCount() {
     const cart = JSON.parse(localStorage.getItem('cart') || '{}');
     const total = Object.values(cart).reduce((a,b)=>a+b,0);
@@ -86,5 +49,6 @@ function updateCartCount() {
 }
 updateCartCount();
 </script>
+
 </body>
 </html>
