@@ -1,33 +1,72 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <meta charset="UTF-8">
-    <title>{{ painting.name }} — Art Store</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <meta charset="UTF-8">
+  <title>Картина — Art Store</title>
+  <link rel="stylesheet" href="../static/css/style.css">
 </head>
 <body>
 <header>
-    <h1>{{ painting.name }}</h1>
-    <nav>
-        <a href="{{ url_for('index') }}">Главная</a>
-        <a href="{{ url_for('cart_view') }}">Корзина ({{ cart_count }})</a>
-    </nav>
+  <h1 id="painting-title">Картина</h1>
+  <nav>
+    <a href="../index.html">Главная</a>
+    <a href="../cart.html">Корзина (<span id="cart-count">0</span>)</a>
+  </nav>
 </header>
 
 <main class="detail">
-    <img src="{{ painting.img }}" alt="{{ painting.name }}" class="painting-img">
-    <h2>{{ painting.name }}</h2>
-    <p>Автор: {{ painting.artist }}</p>
-    <p>Цена: {{ painting.price }} ₽</p>
+  <img id="painting-img" src="" alt="" class="painting-img">
+  <h2 id="painting-name"></h2>
+  <p>Автор: <span id="painting-artist"></span></p>
+  <p>Цена: <span id="painting-price"></span> ₽</p>
 
-    <!-- Форма добавления в корзину -->
-    <form action="{{ url_for('cart_add', painting_id=painting.id) }}" method="post">
-        <button class="btn">Добавить в корзину</button>
-    </form>
+  <button class="btn" id="add-to-cart">Добавить в корзину</button>
 </main>
 
 <footer>
-    <p>© 2025 My Art Store</p>
+  <p>© 2025 My Art Store</p>
 </footer>
+
+<script>
+  // Данные картин (в реальности можно вынести в paintings.json)
+  const paintings = {
+    1: { id: 1, name: "Горы", artist: "Иванов", price: 5000, img: "../static/img/mountain.jpg" },
+    2: { id: 2, name: "Река", artist: "Петров", price: 3000, img: "../static/img/river.jpg" },
+    3: { id: 3, name: "Закат", artist: "Сидоров", price: 4000, img: "../static/img/sunset.jpg" },
+    4: { id: 4, name: "Мона Лиза", artist: "Да Винчи", price: 1000000, img: "../static/img/monalisa.jpg" }
+  };
+
+  // Берём id из URL (?id=2)
+  const params = new URLSearchParams(window.location.search);
+  const id = params.get("id");
+  const painting = paintings[id];
+
+  if (painting) {
+    document.title = `${painting.name} — Art Store`;
+    document.getElementById("painting-title").textContent = painting.name;
+    document.getElementById("painting-name").textContent = painting.name;
+    document.getElementById("painting-artist").textContent = painting.artist;
+    document.getElementById("painting-price").textContent = painting.price;
+    document.getElementById("painting-img").src = painting.img;
+    document.getElementById("painting-img").alt = painting.name;
+
+    document.getElementById("add-to-cart").addEventListener("click", () => {
+      let cart = JSON.parse(localStorage.getItem("cart")) || {};
+      cart[id] = (cart[id] || 0) + 1;
+      localStorage.setItem("cart", JSON.stringify(cart));
+      updateCartCount();
+      alert("Картина добавлена в корзину!");
+    });
+  } else {
+    document.querySelector("main").innerHTML = "<p>Картина не найдена.</p>";
+  }
+
+  function updateCartCount() {
+    const cart = JSON.parse(localStorage.getItem("cart")) || {};
+    const count = Object.values(cart).reduce((a, b) => a + b, 0);
+    document.getElementById("cart-count").textContent = count;
+  }
+  updateCartCount();
+</script>
 </body>
 </html>

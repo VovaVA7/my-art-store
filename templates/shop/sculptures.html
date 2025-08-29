@@ -1,7 +1,88 @@
-{% extends "base.html" %}
-{% block title %}Скульптуры — Art Store{% endblock %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Скульптуры — Art Store</title>
+  <link rel="stylesheet" href="static/css/style.css">
+</head>
+<body>
+<header>
+  <h1>Art Store</h1>
+  <nav>
+    <a href="index.html">Главная</a>
+    <a href="paintings.html">Картины</a>
+    <a href="sculptures.html">Скульптуры</a>
+    <a href="cart.html">Корзина (<span id="cart-count">0</span>)</a>
+    <a href="contacts.html">Контакты</a>
+  </nav>
+</header>
 
-{% block content %}
-<h1 class="page-title">Скульптуры</h1>
-<p>Здесь будут представлены скульптуры для покупки.</p>
-{% endblock %}
+<main>
+  <h1 class="page-title">Скульптуры</h1>
+  <p>Здесь представлены скульптуры для покупки:</p>
+
+  <div class="gallery">
+    <div class="card">
+      <img src="static/img/sculpture1.jpg" alt="Скульптура 1">
+      <h3>Давид</h3>
+      <p>Автор: Микеланджело</p>
+      <p class="price">5000 ₽</p>
+      <button class="btn add-to-cart" data-id="s1" data-name="Давид" data-price="5000" data-img="static/img/sculpture1.jpg">В корзину</button>
+    </div>
+
+    <div class="card">
+      <img src="static/img/sculpture2.jpg" alt="Скульптура 2">
+      <h3>Мыслитель</h3>
+      <p>Автор: Огюст Роден</p>
+      <p class="price">4500 ₽</p>
+      <button class="btn add-to-cart" data-id="s2" data-name="Мыслитель" data-price="4500" data-img="static/img/sculpture2.jpg">В корзину</button>
+    </div>
+
+    <div class="card">
+      <img src="static/img/sculpture3.jpg" alt="Скульптура 3">
+      <h3>Венера Милосская</h3>
+      <p>Автор: Александр Антиохийский</p>
+      <p class="price">6000 ₽</p>
+      <button class="btn add-to-cart" data-id="s3" data-name="Венера Милосская" data-price="6000" data-img="static/img/sculpture3.jpg">В корзину</button>
+    </div>
+  </div>
+</main>
+
+<footer>
+  <p>© 2025 My Art Store</p>
+</footer>
+
+<script>
+  // обновляем счётчик корзины
+  function updateCartCount() {
+    const cart = JSON.parse(localStorage.getItem("cart")) || {};
+    const count = Object.values(cart).reduce((a, b) => a + (b.qty || 0), 0);
+    document.getElementById("cart-count").textContent = count;
+  }
+
+  // добавляем в корзину
+  document.querySelectorAll(".add-to-cart").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const id = btn.dataset.id;
+      const name = btn.dataset.name;
+      const price = parseInt(btn.dataset.price);
+      const img = btn.dataset.img;
+
+      let cart = JSON.parse(localStorage.getItem("cart")) || {};
+
+      if (!cart[id]) {
+        cart[id] = { name, price, img, qty: 1 };
+      } else {
+        cart[id].qty++;
+      }
+
+      localStorage.setItem("cart", JSON.stringify(cart));
+      updateCartCount();
+      alert(`${name} добавлена в корзину`);
+    });
+  });
+
+  updateCartCount();
+</script>
+</body>
+</html>

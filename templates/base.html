@@ -2,8 +2,8 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <title>{% block title %}Art Store{% endblock %}</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <title>Art Store</title>
+    <link rel="stylesheet" href="static/css/style.css">
     <style>
         /* Минимальные стили для выпадающего меню */
         .dropdown { position: relative; display: inline-block; }
@@ -33,13 +33,13 @@
             margin-top: 40px;
         }
         .site-footer {
-            background-color: #facc15; /* ярко-жёлтый */
-            color: #111827; /* тёмный текст */
+            background-color: #facc15;
+            color: #111827;
             font-weight: 700;
-            padding: 12px 28px; /* размер футера как кнопки */
-            border-radius: 24px; /* полностью закруглённые углы */
+            padding: 12px 28px;
+            border-radius: 24px;
             text-align: center;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.15); /* лёгкая тень */
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
             cursor: default;
         }
     </style>
@@ -47,32 +47,30 @@
 <body>
 <header class="site-header">
     <div class="container header-inner">
-        <a class="brand" href="{{ url_for('index') }}">Art Store</a>
+        <a class="brand" href="index.html">Art Store</a>
         <nav class="main-nav">
-            <a href="{{ url_for('index') }}">Главная</a>
+            <a href="index.html">Главная</a>
 
             <div class="dropdown">
                 <a href="#">Магазин</a>
                 <div class="dropdown-content">
-                    <a href="{{ url_for('shop_paintings') }}">Картины</a>
-                    <a href="{{ url_for('shop_sculptures') }}">Скульптуры</a>
-                    <a href="{{ url_for('shop_rareties') }}">Раритет</a>
-                    <a href="{{ url_for('shop_coins') }}">Монеты</a>
+                    <a href="shop/paintings.html">Картины</a>
+                    <a href="shop/sculptures.html">Скульптуры</a>
+                    <a href="shop/rareties.html">Раритет</a>
+                    <a href="shop/coins.html">Монеты</a>
                 </div>
             </div>
 
-            <a href="{{ url_for('cart_view') }}">Корзина
-                {% if cart_count > 0 %}
-                    <span class="badge">{{ cart_count }}</span>
-                {% endif %}
+            <a href="cart.html">Корзина
+                <span class="badge" id="cart-count">0</span>
             </a>
-            <a href="{{ url_for('contact') }}">Контакты</a>
+            <a href="contact.html">Контакты</a>
         </nav>
     </div>
 </header>
 
-<main class="container">
-    {% block content %}{% endblock %}
+<main class="container" id="main-content">
+    <!-- Контент каждой страницы будет вставляться здесь -->
 </main>
 
 <div class="site-footer-wrapper">
@@ -80,6 +78,16 @@
         Corporation VA
     </footer>
 </div>
+
+<script>
+// Обновление счетчика корзины
+function updateCartCount() {
+    const cart = JSON.parse(localStorage.getItem('cart') || '{}');
+    const total = Object.values(cart).reduce((a,b)=>a+b,0);
+    document.getElementById('cart-count').textContent = total;
+}
+updateCartCount();
+</script>
 
 </body>
 </html>

@@ -1,7 +1,88 @@
-{% extends "base.html" %}
-{% block title %}Монеты — Art Store{% endblock %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Монеты — Art Store</title>
+  <link rel="stylesheet" href="static/css/style.css">
+</head>
+<body>
+<header>
+  <h1>Art Store</h1>
+  <nav>
+    <a href="index.html">Главная</a>
+    <a href="paintings.html">Картины</a>
+    <a href="sculptures.html">Скульптуры</a>
+    <a href="rarities.html">Раритеты</a>
+    <a href="coins.html">Монеты</a>
+    <a href="cart.html">Корзина (<span id="cart-count">0</span>)</a>
+    <a href="contacts.html">Контакты</a>
+  </nav>
+</header>
 
-{% block content %}
-<h1 class="page-title">Монеты</h1>
-<p>Здесь будут представлены коллекционные монеты.</p>
-{% endblock %}
+<main>
+  <h1 class="page-title">Монеты</h1>
+  <p>Здесь представлены коллекционные монеты:</p>
+
+  <div class="gallery">
+    <div class="card">
+      <img src="static/img/coin1.jpg" alt="Монета 1">
+      <h3>Монета 1</h3>
+      <p>Год: 1923</p>
+      <p class="price">5000 ₽</p>
+      <button class="btn add-to-cart" data-id="c1" data-name="Монета 1" data-price="5000" data-img="static/img/coin1.jpg">В корзину</button>
+    </div>
+
+    <div class="card">
+      <img src="static/img/coin2.jpg" alt="Монета 2">
+      <h3>Монета 2</h3>
+      <p>Год: 1950</p>
+      <p class="price">7500 ₽</p>
+      <button class="btn add-to-cart" data-id="c2" data-name="Монета 2" data-price="7500" data-img="static/img/coin2.jpg">В корзину</button>
+    </div>
+
+    <div class="card">
+      <img src="static/img/coin3.jpg" alt="Монета 3">
+      <h3>Монета 3</h3>
+      <p>Год: 2000</p>
+      <p class="price">10000 ₽</p>
+      <button class="btn add-to-cart" data-id="c3" data-name="Монета 3" data-price="10000" data-img="static/img/coin3.jpg">В корзину</button>
+    </div>
+  </div>
+</main>
+
+<footer>
+  <p>© 2025 My Art Store</p>
+</footer>
+
+<script>
+  function updateCartCount() {
+    const cart = JSON.parse(localStorage.getItem("cart")) || {};
+    const count = Object.values(cart).reduce((a, b) => a + (b.qty || 0), 0);
+    document.getElementById("cart-count").textContent = count;
+  }
+
+  document.querySelectorAll(".add-to-cart").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const id = btn.dataset.id;
+      const name = btn.dataset.name;
+      const price = parseInt(btn.dataset.price);
+      const img = btn.dataset.img;
+
+      let cart = JSON.parse(localStorage.getItem("cart")) || {};
+
+      if (!cart[id]) {
+        cart[id] = { name, price, img, qty: 1 };
+      } else {
+        cart[id].qty++;
+      }
+
+      localStorage.setItem("cart", JSON.stringify(cart));
+      updateCartCount();
+      alert(`${name} добавлен в корзину`);
+    });
+  });
+
+  updateCartCount();
+</script>
+</body>
+</html>

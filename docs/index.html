@@ -1,126 +1,232 @@
-{% extends "base.html" %}
-{% block title %}Art Store — Главная{% endblock %}
-
-{% block content %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Art Store — Главная</title>
+  <link rel="stylesheet" href="static/css/style.css">
+</head>
+<body>
 
 <!-- Блок специального предложения на весь экран -->
 <div class="promo-block">
   <h1>Специальное предложение</h1>
   <p>Уникальная акция только сегодня! Не упустите шанс!</p>
-  <a href="{{ url_for('shop_paintings') }}" class="btn-promo">Перейти в магазин</a>
+  <a href="#" class="btn-promo">Перейти в магазин</a>
 </div>
 
 <!-- Блок магазина -->
 <div class="container">
+
+  <!-- Картины -->
   <h2 class="page-title">Картины</h2>
   <div class="grid">
-
-    {% set paintings = [
-      {"id": 1, "name": "Мона Лиза", "artist": "Леонардо да Винчи", "price": "1 000 000", "img": url_for('static', filename='img/monalisa.jpg')},
-      {"id": 2, "name": "Горы", "artist": "Неизвестный", "price": "1 000", "img": url_for('static', filename='img/mountain.jpg')},
-      {"id": 3, "name": "Река", "artist": "Неизвестный", "price": "1 000", "img": url_for('static', filename='img/river.jpg')},
-      {"id": 4, "name": "Закат", "artist": "Неизвестный", "price": "1 000", "img": url_for('static', filename='img/sunset.jpg')}
-    ] %}
-
-    {% for p in paintings %}
     <div class="card">
       <a class="thumb" href="#">
-        <img src="{{ p.img }}" alt="{{ p.name }}">
+        <img src="static/img/monalisa.jpg" alt="Мона Лиза">
       </a>
       <div class="card-body">
-        <a class="title" href="#">{{ p.name }}</a>
-        <div class="meta">{{ p.artist }}</div>
-        <div class="price">${{ p.price }}</div>
-        <form action="{{ url_for('cart_add', painting_id=p.id) }}" method="post">
-          <button class="btn" type="submit">Добавить в корзину</button>
-        </form>
+        <a class="title" href="#">Мона Лиза</a>
+        <div class="meta">Леонардо да Винчи</div>
+        <div class="price">$1 000 000</div>
+        <button class="btn">Добавить в корзину</button>
       </div>
     </div>
-    {% endfor %}
 
+    <div class="card">
+      <a class="thumb" href="#">
+        <img src="static/img/mountain.jpg" alt="Горы">
+      </a>
+      <div class="card-body">
+        <a class="title" href="#">Горы</a>
+        <div class="meta">Неизвестный</div>
+        <div class="price">$1 000</div>
+        <button class="btn">Добавить в корзину</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <a class="thumb" href="#">
+        <img src="static/img/river.jpg" alt="Река">
+      </a>
+      <div class="card-body">
+        <a class="title" href="#">Река</a>
+        <div class="meta">Неизвестный</div>
+        <div class="price">$1 000</div>
+        <button class="btn">Добавить в корзину</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <a class="thumb" href="#">
+        <img src="static/img/sunset.jpg" alt="Закат">
+      </a>
+      <div class="card-body">
+        <a class="title" href="#">Закат</a>
+        <div class="meta">Неизвестный</div>
+        <div class="price">$1 000</div>
+        <button class="btn">Добавить в корзину</button>
+      </div>
+    </div>
   </div>
 
   <!-- Скульптуры -->
   <h2 class="page-title">Скульптуры</h2>
   <div class="grid">
-    {% set sculptures = [
-      {"id": 101, "name": "Мраморная грация", "artist": "Неизвестный", "price": "1 000", "img": url_for('static', filename='img/placeholder.jpg')},
-      {"id": 102, "name": "Танец камня", "artist": "Неизвестный", "price": "1 000", "img": url_for('static', filename='img/placeholder.jpg')},
-      {"id": 103, "name": "Бронзовый век", "artist": "Неизвестный", "price": "1 000", "img": url_for('static', filename='img/placeholder.jpg')},
-      {"id": 104, "name": "Вечная гармония", "artist": "Неизвестный", "price": "1 000", "img": url_for('static', filename='img/placeholder.jpg')}
-    ] %}
-
-    {% for s in sculptures %}
     <div class="card">
       <a class="thumb" href="#">
-        <img src="{{ s.img }}" alt="{{ s.name }}">
+        <img src="static/img/placeholder.jpg" alt="Мраморная грация">
       </a>
       <div class="card-body">
-        <a class="title" href="#">{{ s.name }}</a>
-        <div class="meta">{{ s.artist }}</div>
-        <div class="price">${{ s.price }}</div>
-        <form action="{{ url_for('cart_add', painting_id=s.id) }}" method="post">
-          <button class="btn" type="submit">Добавить в корзину</button>
-        </form>
+        <a class="title" href="#">Мраморная грация</a>
+        <div class="meta">Неизвестный</div>
+        <div class="price">$1 000</div>
+        <button class="btn">Добавить в корзину</button>
       </div>
     </div>
-    {% endfor %}
+
+    <div class="card">
+      <a class="thumb" href="#">
+        <img src="static/img/placeholder.jpg" alt="Танец камня">
+      </a>
+      <div class="card-body">
+        <a class="title" href="#">Танец камня</a>
+        <div class="meta">Неизвестный</div>
+        <div class="price">$1 000</div>
+        <button class="btn">Добавить в корзину</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <a class="thumb" href="#">
+        <img src="static/img/placeholder.jpg" alt="Бронзовый век">
+      </a>
+      <div class="card-body">
+        <a class="title" href="#">Бронзовый век</a>
+        <div class="meta">Неизвестный</div>
+        <div class="price">$1 000</div>
+        <button class="btn">Добавить в корзину</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <a class="thumb" href="#">
+        <img src="static/img/placeholder.jpg" alt="Вечная гармония">
+      </a>
+      <div class="card-body">
+        <a class="title" href="#">Вечная гармония</a>
+        <div class="meta">Неизвестный</div>
+        <div class="price">$1 000</div>
+        <button class="btn">Добавить в корзину</button>
+      </div>
+    </div>
   </div>
 
   <!-- Раритеты -->
   <h2 class="page-title">Раритеты</h2>
   <div class="grid">
-    {% set rarities = [
-      {"id": 201, "name": "Старинная книга", "artist": "—", "price": "1 000", "img": url_for('static', filename='img/placeholder.jpg')},
-      {"id": 202, "name": "Фолиант мудрости", "artist": "—", "price": "1 000", "img": url_for('static', filename='img/placeholder.jpg')},
-      {"id": 203, "name": "Амулет времени", "artist": "—", "price": "1 000", "img": url_for('static', filename='img/placeholder.jpg')},
-      {"id": 204, "name": "Золотая печать", "artist": "—", "price": "1 000", "img": url_for('static', filename='img/placeholder.jpg')}
-    ] %}
-
-    {% for r in rarities %}
     <div class="card">
       <a class="thumb" href="#">
-        <img src="{{ r.img }}" alt="{{ r.name }}">
+        <img src="static/img/placeholder.jpg" alt="Старинная книга">
       </a>
       <div class="card-body">
-        <a class="title" href="#">{{ r.name }}</a>
-        <div class="meta">{{ r.artist }}</div>
-        <div class="price">${{ r.price }}</div>
-        <form action="{{ url_for('cart_add', painting_id=r.id) }}" method="post">
-          <button class="btn" type="submit">Добавить в корзину</button>
-        </form>
+        <a class="title" href="#">Старинная книга</a>
+        <div class="meta">—</div>
+        <div class="price">$1 000</div>
+        <button class="btn">Добавить в корзину</button>
       </div>
     </div>
-    {% endfor %}
+
+    <div class="card">
+      <a class="thumb" href="#">
+        <img src="static/img/placeholder.jpg" alt="Фолиант мудрости">
+      </a>
+      <div class="card-body">
+        <a class="title" href="#">Фолиант мудрости</a>
+        <div class="meta">—</div>
+        <div class="price">$1 000</div>
+        <button class="btn">Добавить в корзину</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <a class="thumb" href="#">
+        <img src="static/img/placeholder.jpg" alt="Амулет времени">
+      </a>
+      <div class="card-body">
+        <a class="title" href="#">Амулет времени</a>
+        <div class="meta">—</div>
+        <div class="price">$1 000</div>
+        <button class="btn">Добавить в корзину</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <a class="thumb" href="#">
+        <img src="static/img/placeholder.jpg" alt="Золотая печать">
+      </a>
+      <div class="card-body">
+        <a class="title" href="#">Золотая печать</a>
+        <div class="meta">—</div>
+        <div class="price">$1 000</div>
+        <button class="btn">Добавить в корзину</button>
+      </div>
+    </div>
   </div>
 
   <!-- Монеты -->
   <h2 class="page-title">Монеты</h2>
   <div class="grid">
-    {% set coins = [
-      {"id": 301, "name": "Античный денарий", "artist": "—", "price": "1 000", "img": url_for('static', filename='img/placeholder.jpg')},
-      {"id": 302, "name": "Золотой дукат", "artist": "—", "price": "1 000", "img": url_for('static', filename='img/placeholder.jpg')},
-      {"id": 303, "name": "Императорский талер", "artist": "—", "price": "1 000", "img": url_for('static', filename='img/placeholder.jpg')},
-      {"id": 304, "name": "Редкий соверен", "artist": "—", "price": "1 000", "img": url_for('static', filename='img/placeholder.jpg')}
-    ] %}
-
-    {% for c in coins %}
     <div class="card">
       <a class="thumb" href="#">
-        <img src="{{ c.img }}" alt="{{ c.name }}">
+        <img src="static/img/placeholder.jpg" alt="Античный денарий">
       </a>
       <div class="card-body">
-        <a class="title" href="#">{{ c.name }}</a>
-        <div class="meta">{{ c.artist }}</div>
-        <div class="price">${{ c.price }}</div>
-        <form action="{{ url_for('cart_add', painting_id=c.id) }}" method="post">
-          <button class="btn" type="submit">Добавить в корзину</button>
-        </form>
+        <a class="title" href="#">Античный денарий</a>
+        <div class="meta">—</div>
+        <div class="price">$1 000</div>
+        <button class="btn">Добавить в корзину</button>
       </div>
     </div>
-    {% endfor %}
+
+    <div class="card">
+      <a class="thumb" href="#">
+        <img src="static/img/placeholder.jpg" alt="Золотой дукат">
+      </a>
+      <div class="card-body">
+        <a class="title" href="#">Золотой дукат</a>
+        <div class="meta">—</div>
+        <div class="price">$1 000</div>
+        <button class="btn">Добавить в корзину</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <a class="thumb" href="#">
+        <img src="static/img/placeholder.jpg" alt="Императорский талер">
+      </a>
+      <div class="card-body">
+        <a class="title" href="#">Императорский талер</a>
+        <div class="meta">—</div>
+        <div class="price">$1 000</div>
+        <button class="btn">Добавить в корзину</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <a class="thumb" href="#">
+        <img src="static/img/placeholder.jpg" alt="Редкий соверен">
+      </a>
+      <div class="card-body">
+        <a class="title" href="#">Редкий соверен</a>
+        <div class="meta">—</div>
+        <div class="price">$1 000</div>
+        <button class="btn">Добавить в корзину</button>
+      </div>
+    </div>
   </div>
 
 </div>
 
-{% endblock %}
+</body>
+</html>

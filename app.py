@@ -1,129 +1,84 @@
-from flask import Flask, render_template, redirect, url_for, request, flash
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Art Store — Главная</title>
+<link rel="stylesheet" href="static/css/style.css">
+</head>
+<body>
 
-app = Flask(__name__)
-app.secret_key = "your_secret_key"
+<header>
+    <h1>Art Store</h1>
+    <div class="cart-info">
+        Корзина: <span id="cart-count">0</span> шт.
+        <a href="cart.html">Перейти в корзину</a>
+    </div>
+</header>
 
-# Каталог картин (цены в долларах)
-paintings = [
-    {"id": 1, "name": "Мона Лиза", "artist": "Леонардо да Винчи", "price": 1000000, "img": "/static/images/monalisa.jpg"},
-    {"id": 2, "name": "Горы", "artist": "Неизвестный", "price": 1000, "img": "/static/images/mountain.jpg"},
-    {"id": 3, "name": "Река", "artist": "Неизвестный", "price": 1000, "img": "/static/images/river.jpg"},
-    {"id": 4, "name": "Закат", "artist": "Неизвестный", "price": 1000, "img": "/static/images/sunset.jpg"},
-]
+<main>
+    <section class="paintings">
+        <h2>Картины</h2>
+        <div class="grid">
+            <div class="card" data-id="1" data-price="1000000">
+                <img src="static/images/monalisa.jpg" alt="Мона Лиза">
+                <h3>Мона Лиза</h3>
+                <p>Леонардо да Винчи</p>
+                <p>$1 000 000</p>
+                <button onclick="addToCart(1, 1000000)">Добавить в корзину</button>
+            </div>
+            <div class="card" data-id="2" data-price="1000">
+                <img src="static/images/mountain.jpg" alt="Горы">
+                <h3>Горы</h3>
+                <p>Неизвестный</p>
+                <p>$1 000</p>
+                <button onclick="addToCart(2, 1000)">Добавить в корзину</button>
+            </div>
+            <div class="card" data-id="3" data-price="1000">
+                <img src="static/images/river.jpg" alt="Река">
+                <h3>Река</h3>
+                <p>Неизвестный</p>
+                <p>$1 000</p>
+                <button onclick="addToCart(3, 1000)">Добавить в корзину</button>
+            </div>
+            <div class="card" data-id="4" data-price="1000">
+                <img src="static/images/sunset.jpg" alt="Закат">
+                <h3>Закат</h3>
+                <p>Неизвестный</p>
+                <p>$1 000</p>
+                <button onclick="addToCart(4, 1000)">Добавить в корзину</button>
+            </div>
+        </div>
+    </section>
+</main>
 
-# Корзина в памяти (структура: {painting_id: qty})
-cart = {}
+<script>
+// Работа с корзиной через localStorage
+function getCart() {
+    return JSON.parse(localStorage.getItem('cart') || '{}');
+}
 
-def get_cart_items():
-    items = []
-    total = 0
-    for painting_id, qty in cart.items():
-        painting = next((p for p in paintings if p["id"] == painting_id), None)
-        if painting:
-            subtotal = painting["price"] * qty
-            items.append({"painting": painting, "qty": qty, "subtotal": subtotal})
-            total += subtotal
-    return items, total
+function setCart(cart) {
+    localStorage.setItem('cart', JSON.stringify(cart));
+    updateCartCount();
+}
 
-@app.context_processor
-def inject_cart_count():
-    # Чтобы cart_count был доступен во всех шаблонах
-    return dict(cart_count=sum(cart.values()))
+function addToCart(id, price) {
+    let cart = getCart();
+    cart[id] = (cart[id] || 0) + 1;
+    setCart(cart);
+    alert("Товар добавлен в корзину!");
+}
 
-@app.route("/")
-def index():
-    return render_template("index.html", paintings=paintings)
+function updateCartCount() {
+    let cart = getCart();
+    let total = Object.values(cart).reduce((a,b) => a+b, 0);
+    document.getElementById('cart-count').textContent = total;
+}
 
-@app.route("/painting/<int:painting_id>")
-def painting_detail(painting_id):
-    painting = next((p for p in paintings if p["id"] == painting_id), None)
-    if painting:
-        return render_template("painting_detail.html", painting=painting)
-    return "Картина не найдена", 404
+// Обновляем счетчик при загрузке страницы
+updateCartCount();
+</script>
 
-@app.route("/cart")
-def cart_view():
-    items, total = get_cart_items()
-    return render_template("cart.html", items=items, total=total)
-
-@app.route("/cart/add/<int:painting_id>", methods=["POST"])
-def cart_add(painting_id):
-    cart[painting_id] = cart.get(painting_id, 0) + 1
-    return redirect(url_for("cart_view"))
-
-@app.route("/cart/increase/<int:painting_id>")
-def cart_increase(painting_id):
-    if painting_id in cart:
-        cart[painting_id] += 1
-    return redirect(url_for("cart_view"))
-
-@app.route("/cart/decrease/<int:painting_id>")
-def cart_decrease(painting_id):
-    if painting_id in cart:
-        cart[painting_id] -= 1
-        if cart[painting_id] <= 0:
-            cart.pop(painting_id)
-    return redirect(url_for("cart_view"))
-
-@app.route("/cart/remove/<int:painting_id>")
-def cart_remove(painting_id):
-    cart.pop(painting_id, None)
-    return redirect(url_for("cart_view"))
-
-@app.route("/cart/clear")
-def cart_clear():
-    cart.clear()
-    return redirect(url_for("cart_view"))
-
-@app.route("/checkout", methods=["GET", "POST"])
-def checkout():
-    items, total = get_cart_items()
-    if not items:
-        flash("Ваша корзина пуста!", "error")
-        return redirect(url_for("cart_view"))
-
-    if request.method == "POST":
-        name = request.form.get("name")
-        email = request.form.get("email")
-        address = request.form.get("address")
-
-        if name and email and address:
-            cart.clear()
-            flash(f"Спасибо за заказ, {name}! Сумма: ${total}", "success")
-            return redirect(url_for("index"))
-        else:
-            flash("Пожалуйста, заполните все поля", "error")
-
-    return render_template("checkout.html", items=items, total=total)
-
-@app.route("/contact", methods=["GET", "POST"])
-def contact():
-    if request.method == "POST":
-        name = request.form.get("name")
-        email = request.form.get("email")
-        message = request.form.get("message")
-        if name and email and message:
-            flash("Сообщение отправлено!", "success")
-            return redirect(url_for("contact"))
-        else:
-            flash("Пожалуйста, заполните все поля", "error")
-    return render_template("contact.html")
-
-@app.route("/shop/paintings")
-def shop_paintings():
-    return render_template("shop/paintings.html")
-
-@app.route("/shop/sculptures")
-def shop_sculptures():
-    return render_template("shop/sculptures.html")
-
-@app.route("/shop/rareties")
-def shop_rareties():
-    return render_template("shop/rareties.html")
-
-@app.route("/shop/coins")
-def shop_coins():
-    return render_template("shop/coins.html")
-
-if __name__ == "__main__":
-    app.run(debug=True)
+</body>
+</html>

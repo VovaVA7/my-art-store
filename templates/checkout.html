@@ -1,49 +1,109 @@
-{% extends "base.html" %}
-{% block title %}Оформление заказа — Art Store{% endblock %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Оформление заказа — Art Store</title>
+  <link rel="stylesheet" href="static/css/style.css">
+</head>
+<body>
+<header>
+  <h1>Art Store</h1>
+  <nav>
+    <a href="index.html">Главная</a>
+    <a href="paintings.html">Картины</a>
+    <a href="sculptures.html">Скульптуры</a>
+    <a href="rarities.html">Раритеты</a>
+    <a href="coins.html">Монеты</a>
+    <a href="cart.html">Корзина (<span id="cart-count">0</span>)</a>
+    <a href="contacts.html">Контакты</a>
+  </nav>
+</header>
 
-{% block content %}
-<div style="display: flex; flex-direction: column; align-items: center; text-align: center; padding: 40px 20px;">
-    <h1 class="page-title">Оформление заказа</h1>
+<main style="padding: 40px 20px; text-align: center;">
+  <h1 class="page-title">Оформление заказа</h1>
 
-    {% if items %}
-        <table class="cart-table" style="margin: 20px auto; width: 80%; max-width: 800px; border-collapse: collapse;">
-            <thead>
-                <tr>
-                    <th>Картина</th>
-                    <th>Автор</th>
-                    <th>Цена</th>
-                    <th>Кол-во</th>
-                    <th>Сумма</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for row in items %}
-                <tr>
-                    <td>{{ row.painting.name }}</td>
-                    <td>{{ row.painting.artist }}</td>
-                    <td>${{ row.painting.price }}</td>
-                    <td>{{ row.qty }}</td>
-                    <td>${{ row.subtotal }}</td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+  <div id="checkout-container"></div>
 
-        <div class="cart-bottom" style="margin: 20px 0; font-size: 1.2em;">
-            <div class="total">Итого: <strong>${{ total }}</strong></div>
-        </div>
+</main>
 
-        <h2 style="margin-top: 40px;">Ваши данные</h2>
-        <form method="post" style="display: flex; flex-direction: column; align-items: center; width: 100%; max-width: 400px;">
-            <input type="text" name="name" placeholder="Имя" required style="width: 100%; padding: 10px; margin: 10px 0;">
-            <input type="email" name="email" placeholder="Email" required style="width: 100%; padding: 10px; margin: 10px 0;">
-            <input type="text" name="address" placeholder="Адрес доставки" required style="width: 100%; padding: 10px; margin: 10px 0;">
-            <button class="btn" type="submit" style="margin-top: 20px; padding: 12px 20px;">Подтвердить заказ</button>
-        </form>
+<footer>
+  <p>© 2025 My Art Store</p>
+</footer>
 
-    {% else %}
-        <p>Ваша корзина пуста.</p>
-        <p><a class="link" href="{{ url_for('index') }}">← Перейти к картинам</a></p>
-    {% endif %}
-</div>
-{% endblock %}
+<script>
+function updateCartCount() {
+  const cart = JSON.parse(localStorage.getItem("cart")) || {};
+  const count = Object.values(cart).reduce((a, b) => a + (b.qty || 0), 0);
+  document.getElementById("cart-count").textContent = count;
+}
+
+function renderCheckout() {
+  const cart = JSON.parse(localStorage.getItem("cart")) || {};
+  const container = document.getElementById("checkout-container");
+  container.innerHTML = '';
+
+  const items = Object.values(cart);
+  if (items.length === 0) {
+    container.innerHTML = '<p>Ваша корзина пуста.</p><p><a href="index.html">← Перейти к картинам</a></p>';
+    return;
+  }
+
+  let total = 0;
+  let tableHTML = `
+    <table class="cart-table" style="margin: 20px auto; width: 80%; max-width: 800px; border-collapse: collapse;">
+      <thead>
+        <tr>
+          <th>Товар</th>
+          <th>Цена</th>
+          <th>Кол-во</th>
+          <th>Сумма</th>
+        </tr>
+      </thead>
+      <tbody>
+  `;
+
+  items.forEach(item => {
+    const subtotal = item.price * item.qty;
+    total += subtotal;
+    tableHTML += `
+      <tr>
+        <td>${item.name}</td>
+        <td>${item.price} ₽</td>
+        <td>${item.qty}</td>
+        <td>${subtotal} ₽</td>
+      </tr>
+    `;
+  });
+
+  tableHTML += `
+      </tbody>
+    </table>
+    <div class="cart-bottom" style="margin: 20px 0; font-size: 1.2em;">
+      <div class="total">Итого: <strong>${total} ₽</strong></div>
+    </div>
+  `;
+
+  container.innerHTML = tableHTML + `
+    <h2 style="margin-top: 40px;">Ваши данные</h2>
+    <form id="order-form" style="display: flex; flex-direction: column; align-items: center; width: 100%; max-width: 400px;">
+      <input type="text" name="name" placeholder="Имя" required style="width: 100%; padding: 10px; margin: 10px 0;">
+      <input type="email" name="email" placeholder="Email" required style="width: 100%; padding: 10px; margin: 10px 0;">
+      <input type="text" name="address" placeholder="Адрес доставки" required style="width: 100%; padding: 10px; margin: 10px 0;">
+      <button class="btn" type="submit" style="margin-top: 20px; padding: 12px 20px;">Подтвердить заказ</button>
+    </form>
+  `;
+
+  document.getElementById("order-form").addEventListener("submit", e => {
+    e.preventDefault();
+    alert("Спасибо! Ваш заказ оформлен.");
+    localStorage.removeItem("cart");
+    updateCartCount();
+    renderCheckout();
+  });
+}
+
+updateCartCount();
+renderCheckout();
+</script>
+</body>
+</html>

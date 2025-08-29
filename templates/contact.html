@@ -1,19 +1,32 @@
-{% extends "base.html" %}
-{% block title %}Контакты — Art Store{% endblock %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Контакты — Art Store</title>
+  <link rel="stylesheet" href="static/css/style.css">
+</head>
+<body>
+<header>
+  <h1>Art Store</h1>
+  <nav>
+    <a href="index.html">Главная</a>
+    <a href="cart.html">Корзина (<span id="cart-count">0</span>)</a>
+    <a href="contacts.html">Контакты</a>
+  </nav>
+</header>
 
-{% block content %}
-<div class="contacts">
+<main class="contacts">
   <h1 class="page-title">Контакты</h1>
 
   <p>Вы можете связаться с нами по следующим каналам:</p>
   <ul>
     <li>Email: <a href="mailto:info@artstore.com">info@artstore.com</a></li>
-    <li>Телефон: </li>
-    <li>Адрес: </li>
+    <li>Телефон: +43 660 1234567</li>
+    <li>Адрес: Вена, Австрия</li>
   </ul>
 
   <h2>Форма обратной связи</h2>
-  <form action="#" method="post">
+  <form id="contact-form">
     <label>Имя:</label><br>
     <input type="text" name="name" required><br><br>
     
@@ -25,5 +38,27 @@
     
     <button class="btn" type="submit">Отправить</button>
   </form>
-</div>
-{% endblock %}
+</main>
+
+<footer>
+  <p>© 2025 My Art Store</p>
+</footer>
+
+<script>
+  // Обновление количества товаров в корзине
+  function updateCartCount() {
+    const cart = JSON.parse(localStorage.getItem("cart")) || {};
+    const count = Object.values(cart).reduce((a, b) => a + b, 0);
+    document.getElementById("cart-count").textContent = count;
+  }
+  updateCartCount();
+
+  // Имитируем отправку формы
+  document.getElementById("contact-form").addEventListener("submit", function(e) {
+    e.preventDefault();
+    alert("Спасибо за сообщение! Мы свяжемся с вами по email.");
+    this.reset();
+  });
+</script>
+</body>
+</html>
