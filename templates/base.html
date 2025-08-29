@@ -5,8 +5,18 @@
     <title>Art Store</title>
     <link rel="stylesheet" href="static/css/style.css">
     <style>
-        /* Минимальные стили для выпадающего меню */
-        .dropdown { position: relative; display: inline-block; }
+        body { margin: 0; font-family: sans-serif; }
+        .site-header {
+            background-color: #111; 
+            color: #fff; 
+            padding: 12px 20px; 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center;
+        }
+        .brand { color: #fff; text-decoration: none; font-size: 1.5em; font-weight: bold; }
+        .main-nav a { color: #fff; margin: 0 10px; text-decoration: none; }
+        .main-nav .dropdown { position: relative; display: inline-block; }
         .dropdown-content {
             display: none;
             position: absolute;
@@ -16,16 +26,12 @@
             z-index: 1;
         }
         .dropdown:hover .dropdown-content { display: block; }
-        .dropdown-content a {
-            color: #000;
-            padding: 10px 16px;
-            text-decoration: none;
-            display: block;
-        }
+        .dropdown-content a { color: #000; padding: 10px 16px; text-decoration: none; display: block; }
         .dropdown-content a:hover { background-color: #f1f1f1; }
         .badge { background-color: red; color: #fff; padding: 2px 6px; border-radius: 50%; font-size: 0.8em; }
 
-        /* Футер как кнопка */
+        .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
+
         .site-footer-wrapper {
             width: 100%;
             display: flex;
@@ -46,37 +52,29 @@
 </head>
 <body>
 <header class="site-header">
-    <div class="container header-inner">
-        <a class="brand" href="index.html">Art Store</a>
-        <nav class="main-nav">
-            <a href="index.html">Главная</a>
-
-            <div class="dropdown">
-                <a href="#">Магазин</a>
-                <div class="dropdown-content">
-                    <a href="shop/paintings.html">Картины</a>
-                    <a href="shop/sculptures.html">Скульптуры</a>
-                    <a href="shop/rareties.html">Раритет</a>
-                    <a href="shop/coins.html">Монеты</a>
-                </div>
+    <a class="brand" href="index.html">Art Store</a>
+    <nav class="main-nav">
+        <a href="index.html">Главная</a>
+        <div class="dropdown">
+            <a href="#">Магазин</a>
+            <div class="dropdown-content">
+                <a href="shop/paintings.html">Картины</a>
+                <a href="shop/sculptures.html">Скульптуры</a>
+                <a href="shop/rareties.html">Раритет</a>
+                <a href="shop/coins.html">Монеты</a>
             </div>
-
-            <a href="cart.html">Корзина
-                <span class="badge" id="cart-count">0</span>
-            </a>
-            <a href="contact.html">Контакты</a>
-        </nav>
-    </div>
+        </div>
+        <a href="cart.html">Корзина <span class="badge" id="cart-count">0</span></a>
+        <a href="contact.html">Контакты</a>
+    </nav>
 </header>
 
 <main class="container" id="main-content">
-    <!-- Контент каждой страницы будет вставляться здесь -->
+    <!-- Контент каждой страницы вставляется сюда -->
 </main>
 
 <div class="site-footer-wrapper">
-    <footer class="site-footer">
-        Corporation VA
-    </footer>
+    <footer class="site-footer">Corporation VA</footer>
 </div>
 
 <script>
@@ -88,6 +86,5 @@ function updateCartCount() {
 }
 updateCartCount();
 </script>
-
 </body>
 </html>
